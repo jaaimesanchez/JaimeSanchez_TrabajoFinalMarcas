@@ -42,4 +42,26 @@ let videojuegos = [
     }
 ];
 
-
+let reseñas = [
+    {
+        id: 1,
+        videojuego_id: 1,
+        usuario: "Jaime",
+        comentario: "Muy divertido",
+        puntuacion: 9
+    },
+    {
+        id: 2,
+        videojuego_id: 1,
+        usuario: "Carlos",
+        comentario: "Buen modo online",
+        puntuacion: 8
+    },
+    {
+        id: 3,
+        videojuego_id: 2,
+        usuario: "Ana",
+        comentario: "Muy creativo",
+        puntuacion: 10
+    }
+];
