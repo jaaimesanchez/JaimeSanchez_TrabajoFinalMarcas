@@ -65,3 +65,89 @@ let reseñas = [
         puntuacion: 10
     }
 ];
+
+// Endpoint ping
+
+app.get("/ping", (req, res) => {
+    res.send("Ping realizado correctamente");
+});
+
+// Obtener todos los videojuegos
+app.get("/videojuegos", (req, res) => {
+    res.json(videojuegos);
+});
+
+// Obtener por ID
+app.get("/videojuegos/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const juego = videojuegos.find(v => v.id === id);
+
+    if (!juego) {
+        return res.status(404).json({
+            mensaje: "Videojuego no encontrado"
+        });
+    }
+
+    res.json(juego);
+});
+
+// Buscar por nombre (query param)
+app.get("/buscar", (req, res) => {
+    const nombre = req.query.nombre;
+
+    const resultado = videojuegos.filter(v =>
+        v.nombre.toLowerCase().includes(nombre.toLowerCase())
+    );
+
+    res.json(resultado);
+});
+
+// Crear videojuego
+app.post("/videojuegos", (req, res) => {
+    const nuevo = req.body;
+
+    if (!nuevo.nombre || !nuevo.precio || !nuevo.plataforma) {
+        return res.status(400).json({
+            mensaje: "Faltan campos obligatorios"
+        });
+    }
+
+    videojuegos.push(nuevo);
+
+    res.status(201).json({
+        mensaje: "Videojuego creado",
+        nuevo
+    });
+});
+
+// Modificar videojuego
+app.put("/videojuegos/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const index = videojuegos.findIndex(v => v.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({
+            mensaje: "Videojuego no encontrado"
+        });
+    }
+
+    videojuegos[index] = {
+        ...videojuegos[index],
+        ...req.body
+    };
+
+    res.json(videojuegos[index]);
+});
+
+// Eliminar videojuego
+app.delete("/videojuegos/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+
+    videojuegos = videojuegos.filter(v => v.id !== id);
+
+    res.json({
+        mensaje: "Videojuego eliminado"
+    });
+});
