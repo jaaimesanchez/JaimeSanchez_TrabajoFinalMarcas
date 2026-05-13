@@ -190,3 +190,51 @@ app.delete("/reseñas/:id", (req, res) => {
         mensaje: "Reseña eliminada"
     });
 });
+
+
+// Filtrar por género
+app.get("/filtro/genero", (req, res) => {
+    const genero = req.query.genero;
+
+    const resultado = videojuegos.filter(
+        v => v.genero.toLowerCase() === genero.toLowerCase()
+    );
+
+    res.json(resultado);
+});
+
+// Filtrar por precio
+app.get("/filtro/precio", (req, res) => {
+    const min = parseFloat(req.query.min);
+    const max = parseFloat(req.query.max);
+
+    const resultado = videojuegos.filter(
+        v => v.precio >= min && v.precio <= max
+    );
+
+    res.json(resultado);
+});
+
+// Filtrar disponibles
+app.get("/filtro/disponibles", (req, res) => {
+    const resultado = videojuegos.filter(
+        v => v.disponible === true
+    );
+
+    res.json(resultado);
+});
+
+// Ordenar por precio
+app.get("/ordenar/precio", (req, res) => {
+    const tipo = req.query.tipo;
+
+    let resultado = [...videojuegos];
+
+    if (tipo === "asc") {
+        resultado.sort((a, b) => a.precio - b.precio);
+    } else {
+        resultado.sort((a, b) => b.precio - a.precio);
+    }
+
+    res.json(resultado);
+});
