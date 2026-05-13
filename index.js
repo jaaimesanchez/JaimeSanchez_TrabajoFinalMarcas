@@ -151,3 +151,42 @@ app.delete("/videojuegos/:id", (req, res) => {
         mensaje: "Videojuego eliminado"
     });
 });
+
+// Obtener todas las reseñas
+app.get("/reseñas", (req, res) => {
+    res.json(reseñas);
+});
+
+// Obtener reseñas de un videojuego
+app.get("/videojuegos/:id/reseñas", (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const resultado = reseñas.filter(
+        r => r.videojuego_id === id
+    );
+
+    res.json(resultado);
+});
+
+// Crear reseña
+app.post("/reseñas", (req, res) => {
+    const nueva = req.body;
+
+    reseñas.push(nueva);
+
+    res.status(201).json({
+        mensaje: "Reseña creada",
+        nueva
+    });
+});
+
+// Eliminar reseña
+app.delete("/reseñas/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+
+    reseñas = reseñas.filter(r => r.id !== id);
+
+    res.json({
+        mensaje: "Reseña eliminada"
+    });
+});
