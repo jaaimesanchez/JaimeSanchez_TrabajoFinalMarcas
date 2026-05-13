@@ -238,3 +238,44 @@ app.get("/ordenar/precio", (req, res) => {
 
     res.json(resultado);
 });
+
+// Precio medio
+app.get("/stats/media-precio", (req, res) => {
+    const suma = videojuegos.reduce(
+        (acc, v) => acc + v.precio, 0
+    );
+
+    const media = suma / videojuegos.length;
+
+    res.json({ media });
+});
+
+// Precio máximo
+app.get("/stats/precio-max", (req, res) => {
+    const max = Math.max(...videojuegos.map(v => v.precio));
+
+    res.json({ max });
+});
+
+// Total registros
+app.get("/stats/totales", (req, res) => {
+    res.json({
+        totalVideojuegos: videojuegos.length,
+        totalReseñas: reseñas.length
+    });
+});
+
+// Contar por género
+app.get("/stats/generos", (req, res) => {
+    let conteo = {};
+
+    videojuegos.forEach(v => {
+        if (conteo[v.genero]) {
+            conteo[v.genero]++;
+        } else {
+            conteo[v.genero] = 1;
+        }
+    });
+
+    res.json(conteo);
+});
