@@ -279,3 +279,21 @@ app.get("/stats/generos", (req, res) => {
 
     res.json(conteo);
 });
+
+// Ruta inexistente
+app.use((req, res) => {
+    res.status(404).json({
+        error: "404 Not Found",
+        mensaje: "La ruta solicitada no existe"
+    });
+});
+
+// Error interno del servidor
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+
+    res.status(500).json({
+        error: "500 Internal Server Error",
+        mensaje: "Ha ocurrido un error inesperado en el servidor"
+    });
+});
