@@ -157,7 +157,8 @@ app.get("/reseñas", (req, res) => {
     res.json(reseñas);
 });
 
-// Obtener reseñas de un videojuego
+
+// Obtener reseñas de un videojuego concreto
 app.get("/videojuegos/:id/reseñas", (req, res) => {
     const id = parseInt(req.params.id);
 
@@ -168,29 +169,44 @@ app.get("/videojuegos/:id/reseñas", (req, res) => {
     res.json(resultado);
 });
 
-// Crear reseña
+
+// Crear nueva reseña
 app.post("/reseñas", (req, res) => {
     const nueva = req.body;
+
+    if (!nueva.videojuego_id || !nueva.usuario || !nueva.comentario) {
+        return res.status(400).json({
+            mensaje: "Faltan campos obligatorios"
+        });
+    }
 
     reseñas.push(nueva);
 
     res.status(201).json({
-        mensaje: "Reseña creada",
+        mensaje: "Reseña creada correctamente",
         nueva
     });
 });
+
 
 // Eliminar reseña
 app.delete("/reseñas/:id", (req, res) => {
     const id = parseInt(req.params.id);
 
+    const existe = reseñas.find(r => r.id === id);
+
+    if (!existe) {
+        return res.status(404).json({
+            mensaje: "Reseña no encontrada"
+        });
+    }
+
     reseñas = reseñas.filter(r => r.id !== id);
 
     res.json({
-        mensaje: "Reseña eliminada"
+        mensaje: "Reseña eliminada correctamente"
     });
 });
-
 
 // Filtrar por género
 app.get("/filtro/genero", (req, res) => {
