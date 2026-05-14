@@ -1,6 +1,6 @@
 # JaimeSanchez_TrabajoFinalMarcas
 
-# API REST de Videojuegos 🎮
+# API REST de Videojuegos 
 
 ## Descripción del proyecto
 
