@@ -66,18 +66,18 @@ let reseñas = [
     }
 ];
 
-// Endpoint ping
-
-app.get("/ping", (req, res) => {
-    res.send("Ping realizado correctamente");
-});
-
 // Ruta principal
 app.get("/", (req, res) => {
     res.json({
         videojuegos: videojuegos,
         reseñas: reseñas
     });
+});
+
+// Endpoint ping
+
+app.get("/ping", (req, res) => {
+    res.send("Ping realizado correctamente");
 });
 
 // Obtener todos los videojuegos
