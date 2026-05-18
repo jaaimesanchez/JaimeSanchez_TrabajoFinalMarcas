@@ -72,6 +72,14 @@ app.get("/ping", (req, res) => {
     res.send("Ping realizado correctamente");
 });
 
+// Ruta principal
+app.get("/", (req, res) => {
+    res.json({
+        videojuegos: videojuegos,
+        reseñas: reseñas
+    });
+});
+
 // Obtener todos los videojuegos
 app.get("/videojuegos", (req, res) => {
     res.json(videojuegos);
@@ -313,3 +321,7 @@ app.use((err, req, res, next) => {
         mensaje: "Ha ocurrido un error inesperado en el servidor"
     });
 });
+
+
+
+//Todo: devolver los arrays 
